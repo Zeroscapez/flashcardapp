@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 
 void main() {
-  runApp(FlashcardApp());
+  runApp(const FlashcardApp());
 }
 
 class FlashcardApp extends StatelessWidget {
+  const FlashcardApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -16,12 +18,14 @@ class FlashcardApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: FlashcardPage(),
+      home: const FlashcardPage(),
     );
   }
 }
 
 class FlashcardPage extends StatefulWidget {
+  const FlashcardPage({super.key});
+
   @override
   _FlashcardPageState createState() => _FlashcardPageState();
 }
@@ -67,23 +71,32 @@ class _FlashcardPageState extends State<FlashcardPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Flashcards'),
+        title: const Text('Saved Flashcards', style: TextStyle(color: Colors.black)),
         backgroundColor: Colors.blue,
       ),
+      backgroundColor: Colors.blue, // Set background color of Scaffold
       body: Column(
         children: [
           Expanded(
             child: ListView.builder(
               itemCount: flashcards.length,
               itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text('Question: ${flashcards[index].question}'),
-                  subtitle: Text('Answer: ${flashcards[index].answer}'),
-                  trailing: IconButton(
-                    icon: Icon(Icons.delete),
-                    onPressed: () {
-                      _deleteFlashcard(index);
-                    },
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Card(
+                    color: Colors.white,
+                    child: ListTile(
+                      title: Text('Question: ${flashcards[index].question}',
+                          style: const TextStyle(color: Colors.black)),
+                      subtitle: Text('Answer: ${flashcards[index].answer}',
+                          style: const TextStyle(color: Colors.black)),
+                      trailing: IconButton(
+                        icon: const Icon(Icons.delete),
+                        onPressed: () {
+                          _deleteFlashcard(index);
+                        },
+                      ),
+                    ),
                   ),
                 );
               },
@@ -98,10 +111,10 @@ class _FlashcardPageState extends State<FlashcardPage> {
                   _navigateToAddFlashcardPage(context);
                 },
                 style: ElevatedButton.styleFrom(
-                  shape: CircleBorder(),
-                  padding: EdgeInsets.all(16.0),
+                  shape: const CircleBorder(),
+                  padding: const EdgeInsets.all(16.0),
                 ),
-                child: Icon(Icons.add),
+                child: const Icon(Icons.add),
               ),
             ),
           ),
@@ -114,7 +127,7 @@ class _FlashcardPageState extends State<FlashcardPage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => FlashcardCreationPage(),
+        builder: (context) => const FlashcardCreationPage(),
       ),
     ).then((newFlashcard) {
       if (newFlashcard != null) {
@@ -127,10 +140,33 @@ class _FlashcardPageState extends State<FlashcardPage> {
   }
 
   void _deleteFlashcard(int index) {
-    setState(() {
-      flashcards.removeAt(index);
-      _saveFlashcards();
-    });
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Confirm Deletion'),
+          content: const Text('Are you sure you want to delete this flashcard?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                setState(() {
+                  flashcards.removeAt(index);
+                  _saveFlashcards();
+                });
+                Navigator.of(context).pop();
+              },
+              child: const Text('Delete'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   Future<void> _saveFlashcards() async {
@@ -159,6 +195,8 @@ class Flashcard {
 }
 
 class FlashcardCreationPage extends StatefulWidget {
+  const FlashcardCreationPage({super.key});
+
   @override
   _FlashcardCreationPageState createState() => _FlashcardCreationPageState();
 }
@@ -171,9 +209,10 @@ class _FlashcardCreationPageState extends State<FlashcardCreationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Create Flashcard'),
+        title: const Text('Create Flashcard', style: TextStyle(color: Colors.black)),
         backgroundColor: Colors.blue,
       ),
+      backgroundColor: Colors.blue, // Set background color of Scaffold
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -181,19 +220,23 @@ class _FlashcardCreationPageState extends State<FlashcardCreationPage> {
           children: [
             TextField(
               controller: _questionController,
-              decoration: InputDecoration(labelText: 'Question'),
+              decoration: const InputDecoration(
+                  labelText: 'Question',
+                  labelStyle: TextStyle(color: Colors.black)),
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             TextField(
               controller: _answerController,
-              decoration: InputDecoration(labelText: 'Answer'),
+              decoration: const InputDecoration(
+                  labelText: 'Answer',
+                  labelStyle: TextStyle(color: Colors.black)),
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: () {
                 _addFlashcardAndNavigateBack(context);
               },
-              child: Text('Save'),
+              child: const Text('Save', style: TextStyle(color: Colors.black)),
             ),
           ],
         ),
