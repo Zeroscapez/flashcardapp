@@ -9,7 +9,7 @@ void main() {
 }
 
 class FlashcardApp extends StatelessWidget {
-  const FlashcardApp({Key? key}) : super(key: key);
+  const FlashcardApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class FlashcardApp extends StatelessWidget {
 }
 
 class FlashcardPage extends StatefulWidget {
-  const FlashcardPage({Key? key}) : super(key: key);
+  const FlashcardPage({super.key});
 
   @override
   _FlashcardPageState createState() => _FlashcardPageState();
@@ -217,7 +217,7 @@ class Flashcard {
 }
 
 class FlashcardCreationPage extends StatefulWidget {
-  const FlashcardCreationPage({Key? key}) : super(key: key);
+  const FlashcardCreationPage({super.key});
 
   @override
   _FlashcardCreationPageState createState() => _FlashcardCreationPageState();

@@ -13,13 +13,13 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text(
           'Flashcard Quizzer',
-          textAlign: TextAlign.center, // Align header text to center
-          style: TextStyle(fontSize: 40), // Set font size of header text
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 40),
         ),
         backgroundColor: Colors.blue,
-        centerTitle: true, // Center the header text
+        centerTitle: true,
       ),
-      backgroundColor: Colors.blue, // Set background color of Scaffold
+      backgroundColor: Colors.blue,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -32,7 +32,7 @@ class HomePage extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                         builder: (context) => const FlashcardPage
-                            .FlashcardPage()), // Use the prefix for FlashcardPage
+                            .FlashcardPage()), // Reference FlashcardPage
                   );
                 },
                 style: ElevatedButton.styleFrom(
@@ -58,9 +58,8 @@ class HomePage extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => QuizModePage.QuizModePage(
-                              flashcards: [],
-                            )), // Use the prefix for QuizModePage
+                        builder: (context) =>
+                            const QuizModePage.QuizModePage()), // Reference QuizMode
                   );
                 },
                 style: ElevatedButton.styleFrom(
