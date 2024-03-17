@@ -9,7 +9,7 @@ void main() {
 }
 
 class FlashcardApp extends StatelessWidget {
-  const FlashcardApp({super.key});
+  const FlashcardApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class FlashcardApp extends StatelessWidget {
 }
 
 class FlashcardPage extends StatefulWidget {
-  const FlashcardPage({super.key});
+  const FlashcardPage({Key? key}) : super(key: key);
 
   @override
   _FlashcardPageState createState() => _FlashcardPageState();
@@ -42,12 +42,31 @@ class _FlashcardPageState extends State<FlashcardPage> {
 
   Future<void> _initStorageFilePathAndLoadFlashcards() async {
     await _initStorageFilePath();
+    bool fileExists = await File(_storageFilePath).exists();
+    if (!fileExists) {
+      await _prePopulateFlashcards();
+    }
     _loadFlashcards();
   }
 
   Future<void> _initStorageFilePath() async {
     Directory appDocDir = await getApplicationDocumentsDirectory();
     _storageFilePath = '${appDocDir.path}/flashcards.json';
+  }
+
+  Future<void> _prePopulateFlashcards() async {
+    // Pre-populate the flashcards with some initial data
+    List<Flashcard> initialFlashcards = [
+      Flashcard(
+        question: 'What is the capital of France?',
+        answer: 'Paris',
+      ),
+      Flashcard(
+        question: 'What is the largest planet in our solar system?',
+        answer: 'Jupiter',
+      ),
+    ];
+    await _saveFlashcards(initialFlashcards);
   }
 
   Future<void> _loadFlashcards() async {
@@ -71,7 +90,8 @@ class _FlashcardPageState extends State<FlashcardPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Saved Flashcards', style: TextStyle(color: Colors.black)),
+        title: const Text('Saved Flashcards',
+            style: TextStyle(color: Colors.black)),
         backgroundColor: Colors.blue,
       ),
       backgroundColor: Colors.blue, // Set background color of Scaffold
@@ -145,7 +165,8 @@ class _FlashcardPageState extends State<FlashcardPage> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Confirm Deletion'),
-          content: const Text('Are you sure you want to delete this flashcard?'),
+          content:
+              const Text('Are you sure you want to delete this flashcard?'),
           actions: <Widget>[
             TextButton(
               onPressed: () {
@@ -169,10 +190,11 @@ class _FlashcardPageState extends State<FlashcardPage> {
     );
   }
 
-  Future<void> _saveFlashcards() async {
+  Future<void> _saveFlashcards([List<Flashcard>? flashcardsToSave]) async {
+    List<Flashcard> saveData = flashcardsToSave ?? flashcards;
     try {
       File file = File(_storageFilePath);
-      String data = jsonEncode(flashcards);
+      String data = jsonEncode(saveData);
       await file.writeAsString(data);
       print('Flashcards saved to: $_storageFilePath');
     } catch (e) {
@@ -195,7 +217,7 @@ class Flashcard {
 }
 
 class FlashcardCreationPage extends StatefulWidget {
-  const FlashcardCreationPage({super.key});
+  const FlashcardCreationPage({Key? key}) : super(key: key);
 
   @override
   _FlashcardCreationPageState createState() => _FlashcardCreationPageState();
@@ -209,7 +231,8 @@ class _FlashcardCreationPageState extends State<FlashcardCreationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Create Flashcard', style: TextStyle(color: Colors.black)),
+        title: const Text('Create Flashcard',
+            style: TextStyle(color: Colors.black)),
         backgroundColor: Colors.blue,
       ),
       backgroundColor: Colors.blue, // Set background color of Scaffold
