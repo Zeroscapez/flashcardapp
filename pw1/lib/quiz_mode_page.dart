@@ -5,7 +5,7 @@ import 'package:pw1/flashcard_page.dart'
 class QuizModePage extends StatefulWidget {
   final List<FlashcardPage.Flashcard> flashcards;
 
-  const QuizModePage({Key? key, required this.flashcards}) : super(key: key);
+  const QuizModePage({super.key, required this.flashcards});
 
   @override
   _QuizModePageState createState() => _QuizModePageState();
@@ -24,8 +24,8 @@ class _QuizModePageState extends State<QuizModePage> {
         appBar: AppBar(
           title: const Text('Quiz Mode'),
         ),
-        body: Center(
-          child: const Text('No flashcards available.'),
+        body: const Center(
+          child: Text('No flashcards available.'),
         ),
       );
     }

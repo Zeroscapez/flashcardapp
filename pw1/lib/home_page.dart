@@ -58,7 +58,7 @@ class HomePage extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => QuizModePage.QuizModePage(
+                        builder: (context) => const QuizModePage.QuizModePage(
                               flashcards: [],
                             )), // Use the prefix for QuizModePage
                   );
