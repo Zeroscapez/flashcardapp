@@ -9,7 +9,7 @@ void main() {
 }
 
 class FlashcardApp extends StatelessWidget {
-  const FlashcardApp({super.key});
+  const FlashcardApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class FlashcardApp extends StatelessWidget {
 }
 
 class FlashcardPage extends StatefulWidget {
-  const FlashcardPage({super.key});
+  const FlashcardPage({Key? key}) : super(key: key);
 
   @override
   _FlashcardPageState createState() => _FlashcardPageState();
@@ -94,7 +94,7 @@ class _FlashcardPageState extends State<FlashcardPage> {
             style: TextStyle(color: Colors.black)),
         backgroundColor: Colors.blue,
       ),
-      backgroundColor: Colors.blue, // Set background color of Scaffold
+      backgroundColor: Colors.blue,
       body: Column(
         children: [
           Expanded(
@@ -217,7 +217,7 @@ class Flashcard {
 }
 
 class FlashcardCreationPage extends StatefulWidget {
-  const FlashcardCreationPage({super.key});
+  const FlashcardCreationPage({Key? key}) : super(key: key);
 
   @override
   _FlashcardCreationPageState createState() => _FlashcardCreationPageState();
@@ -235,7 +235,7 @@ class _FlashcardCreationPageState extends State<FlashcardCreationPage> {
             style: TextStyle(color: Colors.black)),
         backgroundColor: Colors.blue,
       ),
-      backgroundColor: Colors.blue, // Set background color of Scaffold
+      backgroundColor: Colors.blue,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
